@@ -13,7 +13,7 @@ export default function PopularMenu() {
       });
   }, []);
   return (
-    <div className="mb-20">
+    <div className="mb-20 mt-10">
       <SectionTitle heading={"From Our Menu"} subHeading={"Popular Items"} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
         {menu.map((item) => (
