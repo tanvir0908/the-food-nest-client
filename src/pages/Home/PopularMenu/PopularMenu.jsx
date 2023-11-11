@@ -20,6 +20,11 @@ export default function PopularMenu() {
           <MenuItem key={item._id} item={item} />
         ))}
       </div>
+      <div className="text-center mt-8">
+        <button className="btn btn-outline border-0 border-b-2">
+          Order Now
+        </button>
+      </div>
     </div>
   );
 }
