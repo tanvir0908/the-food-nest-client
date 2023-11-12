@@ -4,15 +4,15 @@ import MenuItem from "../../Shared/MenuItem/MenuItem";
 
 export default function MenuCategory({ items, title, coverImage }) {
   return (
-    <div className="mb-10">
+    <div className="my-10">
       {title && (
         <Cover
           image={coverImage}
-          title={"OUR MENU"}
-          description={"Would you like to try a dish?"}
+          title={title}
+          description={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
         ></Cover>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-20 mt-10">
         {items.map((item) => (
           <MenuItem key={item._id} item={item} />
         ))}
