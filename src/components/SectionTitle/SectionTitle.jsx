@@ -2,7 +2,7 @@
 
 export default function SectionTitle({ heading, subHeading }) {
   return (
-    <div>
+    <div className="mt-5">
       <p className="text-xl font-medium text-center text-[#D99904]">
         {subHeading}
       </p>
