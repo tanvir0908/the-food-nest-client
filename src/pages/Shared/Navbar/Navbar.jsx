@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 export default function Navbar() {
+  const { user, logOut } = useContext(AuthContext);
   const navLinks = (
     <>
       <li>
@@ -14,8 +17,24 @@ export default function Navbar() {
         <NavLink to={"/order/salad"}>Order</NavLink>
       </li>
       <li>
-        <NavLink to={"/login"}>Login</NavLink>
+        <NavLink to={"secret"}>Secret</NavLink>
       </li>
+      {user ? (
+        <li>
+          <button
+            className="btn btn-ghost"
+            onClick={() => {
+              logOut().then().catch();
+            }}
+          >
+            Logout
+          </button>
+        </li>
+      ) : (
+        <li>
+          <NavLink to={"/login"}>Login</NavLink>
+        </li>
+      )}
     </>
   );
   return (

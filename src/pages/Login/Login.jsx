@@ -1,17 +1,22 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
-  const captchaRef = useRef(null);
-  const [disabled, setDisabled] = useState(true);
+  const [captchaError, setCaptchaError] = useState(false);
   const { logIn } = useContext(AuthContext);
+  const location = useLocation();
+  console.log(location);
+  const locationForm = location.state?.from?.pathname || "/";
 
+  const navigate = useNavigate();
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -22,31 +27,30 @@ export default function Login() {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const user = {
-      email,
-      password,
-    };
-    console.log(user);
+    const value = form.captcha.value;
 
-    logIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const handleValidate = () => {
-    const value = captchaRef.current.value;
-    if (validateCaptcha(value) == true) {
-      setDisabled(false);
+    if (validateCaptcha(value) === true) {
+      setCaptchaError(false);
+      logIn(email, password)
+        .then((result) => {
+          form.reset();
+          const user = result.user;
+          console.log(user);
+          toast.success("Login successfully");
+          navigate(locationForm);
+        })
+        .catch((error) => console.log(error));
     } else {
-      setDisabled(true);
+      setCaptchaError(true);
     }
   };
 
   return (
     <div>
+      <Helmet>
+        <title>Register - The Food Nest</title>
+      </Helmet>
+      <Toaster />
       <div className="hero min-h-screen bg-base-200">
         <div className="flex flex-col lg:flex-row">
           <div className="flex-1 text-center lg:text-left">
@@ -85,34 +89,34 @@ export default function Login() {
               </div>
               <div className="form-control mt-5">
                 <LoadCanvasTemplate />
-                <label className="label">
-                  <span className="label-text">Captcha</span>
-                </label>
+
                 <input
-                  ref={captchaRef}
                   type="text"
                   name="captcha"
                   placeholder="captcha"
-                  className="input input-bordered"
+                  className="input input-bordered mt-2"
                   required
                 />
-                <button
-                  onClick={handleValidate}
-                  className="btn btn-outline btn-xs w-[5rem] mt-2"
-                >
-                  validate
-                </button>
               </div>
+              {captchaError && (
+                <span className="text-red-500 font-medium">
+                  Captcha does not match
+                </span>
+              )}
               <div className="form-control mt-6">
                 <input
-                  disabled={disabled}
                   className="btn btn-primary"
                   type="submit"
                   value="Login"
                 />
               </div>
             </form>
-            <p>New here? Please <Link to={'/register'} className="font-bold text-">Register</Link></p>
+            <p>
+              New here? Please{" "}
+              <Link to={"/register"} className="font-bold text-">
+                Register
+              </Link>
+            </p>
           </div>
         </div>
       </div>
