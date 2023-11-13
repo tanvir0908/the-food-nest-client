@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const { logIn } = useContext(AuthContext);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -25,6 +27,13 @@ export default function Login() {
       password,
     };
     console.log(user);
+
+    logIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleValidate = () => {
@@ -103,6 +112,7 @@ export default function Login() {
                 />
               </div>
             </form>
+            <p>New here? Please <Link to={'/register'} className="font-bold text-">Register</Link></p>
           </div>
         </div>
       </div>

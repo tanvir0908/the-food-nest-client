@@ -5,7 +5,9 @@ import Navbar from "../pages/Shared/Navbar/Navbar";
 export default function Root() {
   const location = useLocation();
   // console.log(location);
-  const isShow = location.pathname.includes("login");
+  const isShow =
+    location.pathname.includes("login") ||
+    location.pathname.includes("register");
   // console.log(isShow);
   return (
     <div>
