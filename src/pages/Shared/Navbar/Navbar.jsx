@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
@@ -9,10 +10,19 @@ export default function Navbar() {
       <li>
         <NavLink to={"/menu"}>Menu</NavLink>
       </li>
+      <li>
+        <NavLink to={"/order/salad"}>Order</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/login"}>Login</NavLink>
+      </li>
     </>
   );
   return (
     <div>
+      <Helmet>
+        <title>Order Now - The Food Nest</title>
+      </Helmet>
       <div className="max-w-screen-xl navbar fixed z-10 bg-black bg-opacity-30  text-white">
         <div className="navbar-start">
           <div className="dropdown">

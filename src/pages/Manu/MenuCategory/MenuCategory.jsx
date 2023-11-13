@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 import Cover from "../../Shared/Cover/Cover";
 import MenuItem from "../../Shared/MenuItem/MenuItem";
 
@@ -17,6 +18,11 @@ export default function MenuCategory({ items, title, coverImage }) {
           <MenuItem key={item._id} item={item} />
         ))}
       </div>
+      <Link to={`/order/${title}`}>
+        <button className="btn btn-outline border-0 border-b-2">
+          Order Now
+        </button>
+      </Link>
     </div>
   );
 }
