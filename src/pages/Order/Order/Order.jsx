@@ -13,7 +13,7 @@ export default function Order() {
   const initialIndex = categories.indexOf(category);
   const [tabIndex, setTabIndex] = useState(initialIndex);
 
-  console.log(category);
+  // console.log(category);
 
   const [menu] = useMenu();
   const dessert = menu.filter((item) => item.category === "dessert");

@@ -3,11 +3,16 @@ import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 /* eslint-disable react/prop-types */
 export default function FoodCard({ item }) {
   const { user } = useAuth();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
+  const [, refetch] = useCart();
 
   const { _id, image, name, recipe, price } = item;
   const navigate = useNavigate();
@@ -15,15 +20,25 @@ export default function FoodCard({ item }) {
     if (user && user.email) {
       const cartItem = {
         menuId: _id,
-        email: ServiceWorker.email,
+        email: user.email,
         name,
         image,
         price,
       };
-      
 
+      axiosSecure.post("/carts", cartItem).then((res) => {
+        if (res?.data?.insertedId) {
+          toast.success(`${name} added successfully`);
+          //refetch the cart data
+          refetch();
+        }
+      });
 
-      toast.success("Success");
+      // axios.post("http://localhost:5000/carts", cartItem).then((res) => {
+      //   if (res?.data?.insertedId) {
+      //     toast.success(`${name} added successfully`);
+      //   }
+      // });
     } else {
       Swal.fire({
         title: "You are not logged in",
@@ -42,7 +57,7 @@ export default function FoodCard({ item }) {
   };
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={false} />
       <figure className="relative">
         <img src={image} alt="Shoes" />
         <p className="absolute top-3 rounded right-5 bg-black px-2 py-1 text-white font-medium">

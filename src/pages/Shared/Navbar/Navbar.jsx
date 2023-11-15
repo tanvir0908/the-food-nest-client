@@ -3,9 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { IoCartOutline } from "react-icons/io5";
+import useCart from "../../../hooks/useCart";
 
 export default function Navbar() {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart();
+
   const navLinks = (
     <>
       <li>
@@ -23,8 +26,8 @@ export default function Navbar() {
       <li>
         <Link to={"/"}>
           <button className="btn bg-gray-400">
-            <IoCartOutline size={30}/>
-            <div className="badge badge-secondary">+0</div>
+            <IoCartOutline size={30} />
+            <div className="badge badge-secondary">{cart.length}</div>
           </button>
         </Link>
       </li>
