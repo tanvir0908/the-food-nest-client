@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { IoCartOutline } from "react-icons/io5";
 
 export default function Navbar() {
   const { user, logOut } = useContext(AuthContext);
@@ -19,8 +20,17 @@ export default function Navbar() {
       <li>
         <NavLink to={"secret"}>Secret</NavLink>
       </li>
+      <li>
+        <Link to={"/"}>
+          <button className="btn bg-gray-400">
+            <IoCartOutline size={30}/>
+            <div className="badge badge-secondary">+0</div>
+          </button>
+        </Link>
+      </li>
       {user ? (
         <li>
+          {/* <span>{user?.displayName}</span> */}
           <button
             className="btn btn-ghost"
             onClick={() => {

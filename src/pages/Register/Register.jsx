@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
   const {
@@ -11,7 +12,7 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -19,6 +20,12 @@ export default function Register() {
     createUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        toast.success("User created successfully");
+        updateUserProfile(data.name, data.photo)
+          .then(() => {
+            console.log("Profile info updated");
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
   };
@@ -28,6 +35,7 @@ export default function Register() {
       <Helmet>
         <title>Register - The Food Nest</title>
       </Helmet>
+      <Toaster />
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
@@ -51,6 +59,23 @@ export default function Register() {
                 className="input input-bordered"
               />
               {errors.name && (
+                <span className="text-red-500 mt-2 font-semibold">
+                  This field is required
+                </span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                placeholder="photo"
+                {...register("photo", { required: true })}
+                name="photo"
+                className="input input-bordered"
+              />
+              {errors.photo && (
                 <span className="text-red-500 mt-2 font-semibold">
                   This field is required
                 </span>
