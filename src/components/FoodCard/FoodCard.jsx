@@ -2,16 +2,27 @@
 import toast, { Toaster } from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 export default function FoodCard({ item }) {
   const { user } = useAuth();
+  const location = useLocation();
 
-  const { image, name, recipe, price } = item;
-const navigate = useNavigate()
+  const { _id, image, name, recipe, price } = item;
+  const navigate = useNavigate();
   const handleCart = (food) => {
     if (user && user.email) {
+      const cartItem = {
+        menuId: _id,
+        email: ServiceWorker.email,
+        name,
+        image,
+        price,
+      };
+      
+
+
       toast.success("Success");
     } else {
       Swal.fire({
@@ -24,7 +35,7 @@ const navigate = useNavigate()
         confirmButtonText: "Yes, Login!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/login')
+          navigate("/login", { state: { from: location } });
         }
       });
     }
