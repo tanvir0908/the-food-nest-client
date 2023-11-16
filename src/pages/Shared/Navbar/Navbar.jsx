@@ -24,7 +24,7 @@ export default function Navbar() {
         <NavLink to={"secret"}>Secret</NavLink>
       </li>
       <li>
-        <Link to={"/"}>
+        <Link to={"/dashboard/cart"}>
           <button className="btn bg-gray-400">
             <IoCartOutline size={30} />
             <div className="badge badge-secondary">{cart.length}</div>
