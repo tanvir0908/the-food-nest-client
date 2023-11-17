@@ -10,10 +10,11 @@ import {
   FaUsers,
   FaUtensils,
 } from "react-icons/fa";
+import useAdmin from "../hooks/useAdmin";
 
 export default function Dashboard() {
   // ToDo: get admin value from the database
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="flex">
@@ -88,7 +89,9 @@ export default function Dashboard() {
               </li>
               <li>
                 <NavLink
-                  className={"flex items-center gap-1"}
+                  className={
+                    "flex items-center gap-3 p-3 m-2 text-xl font-medium"
+                  }
                   to={"/dashboard/reservation"}
                 >
                   <FaCalendar /> Reservation
@@ -106,7 +109,9 @@ export default function Dashboard() {
               </li>
               <li>
                 <NavLink
-                  className={"flex items-center gap-1"}
+                  className={
+                    "flex items-center gap-3 p-3 m-2 text-xl font-medium"
+                  }
                   to={"/dashboard/review"}
                 >
                   <MdRateReview /> Review
