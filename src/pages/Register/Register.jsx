@@ -4,8 +4,10 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function Register() {
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -20,10 +22,20 @@ export default function Register() {
     createUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
-        toast.success("User created successfully");
         updateUserProfile(data.name, data.photo)
           .then(() => {
             console.log("Profile info updated");
+            const userInfo = {
+              email: data.email,
+              name: data.name,
+              photo: data.photo,
+            };
+            // store users information into database
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                toast.success("User created successfully");
+              }
+            });
           })
           .catch((error) => console.log(error));
       })
