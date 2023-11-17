@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 export default function Register() {
   const axiosPublic = useAxiosPublic();
@@ -159,6 +160,7 @@ export default function Register() {
               Login
             </Link>
           </p>
+          <SocialLogin />
         </div>
       </div>
     </div>

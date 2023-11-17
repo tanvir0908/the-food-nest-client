@@ -1,10 +1,12 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { IoCart, IoHome } from "react-icons/io5";
-import { FaCalendar } from "react-icons/fa6";
-import { MdRateReview } from "react-icons/md";
-import { FaClipboardList, FaSearch } from "react-icons/fa";
+import { MdEmail, MdRateReview } from "react-icons/md";
+import { FaCalendar, FaClipboardList, FaSearch } from "react-icons/fa";
 
 export default function Dashboard() {
+  // ToDo: get admin value from the database
+  const isAdmin = true;
+
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-orange-300">
@@ -66,6 +68,15 @@ export default function Dashboard() {
             >
               <FaSearch className="h-5 w-5" />
               Menu
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={"flex items-center gap-1 bg-purple-500 p-3 m-2"}
+              to={"/order/contact"}
+            >
+              <MdEmail className="h-5 w-5" />
+              Contact
             </NavLink>
           </li>
         </ul>

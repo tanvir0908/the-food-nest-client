@@ -8,12 +8,12 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import toast, { Toaster } from "react-hot-toast";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 export default function Login() {
   const [captchaError, setCaptchaError] = useState(false);
   const { logIn } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
   const locationForm = location.state?.from?.pathname || "/";
 
   const navigate = useNavigate();
@@ -117,6 +117,7 @@ export default function Login() {
                 Register
               </Link>
             </p>
+            <SocialLogin />
           </div>
         </div>
       </div>
