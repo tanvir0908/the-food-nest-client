@@ -4,6 +4,7 @@ import useMenu from "../../../hooks/useMenu";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
+import { Link } from "react-router-dom";
 
 export default function ManageItems() {
   const [menu, , refetch] = useMenu();
@@ -32,10 +33,6 @@ export default function ManageItems() {
         }
       }
     });
-  };
-
-  const handleUpdate = (item) => {
-    console.log(item);
   };
 
   return (
@@ -77,12 +74,11 @@ export default function ManageItems() {
                 <td>{item.category}</td>
                 <td>{item.price}</td>
                 <th>
-                  <button
-                    onClick={() => handleUpdate(item)}
-                    className="bg-orange-300 p-2 text-lg rounded-xl"
-                  >
-                    <FaEdit />
-                  </button>
+                  <Link to={`/dashboard/updateItem/${item._id}`}>
+                    <button className="bg-orange-300 p-2 text-lg rounded-xl">
+                      <FaEdit />
+                    </button>
+                  </Link>
                 </th>
                 <td>
                   <button
