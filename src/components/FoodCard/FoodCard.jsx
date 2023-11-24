@@ -34,7 +34,7 @@ export default function FoodCard({ item }) {
         }
       });
 
-      // axios.post("http://localhost:5000/carts", cartItem).then((res) => {
+      // axios.post("https://the-food-nest-server.vercel.app/carts", cartItem).then((res) => {
       //   if (res?.data?.insertedId) {
       //     toast.success(`${name} added successfully`);
       //   }

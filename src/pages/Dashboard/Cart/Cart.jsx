@@ -2,6 +2,7 @@ import { FaTrash } from "react-icons/fa6";
 import useCart from "../../../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const [cart, refetch] = useCart();
@@ -22,7 +23,7 @@ export default function Cart() {
       if (result.isConfirmed) {
         axiosSecure.delete(`/carts/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
-            refetch()
+            refetch();
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
@@ -38,9 +39,20 @@ export default function Cart() {
       <div className="text-4xl flex justify-evenly">
         <h2>Total Orders: {cart.length}</h2>
         <h2>Total Pice: ${totalPrice}</h2>
-        <button className="bg-purple-400 text-3xl px-5 py-2 rounded-xl">
-          Pay
-        </button>
+        {cart.length ? (
+          <Link to={"/dashboard/payment"}>
+            <button className="bg-purple-400 text-3xl px-5 py-2 rounded-xl">
+              Pay
+            </button>
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="bg-purple-400 text-3xl px-5 py-2 rounded-xl"
+          >
+            Pay
+          </button>
+        )}
       </div>
       <div className="overflow-x-auto mt-10">
         <table className="table w-full">

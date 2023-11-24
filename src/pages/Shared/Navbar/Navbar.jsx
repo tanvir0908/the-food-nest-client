@@ -4,10 +4,12 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { IoCartOutline } from "react-icons/io5";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
 
 export default function Navbar() {
   const { user, logOut } = useContext(AuthContext);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
 
   const navLinks = (
     <>
@@ -20,20 +22,28 @@ export default function Navbar() {
       <li>
         <NavLink to={"/order/salad"}>Order</NavLink>
       </li>
-      <li>
-        <NavLink to={"secret"}>Secret</NavLink>
-      </li>
-      <li>
+      {user && isAdmin && (
+        <li>
+          <NavLink to={"/dashboard/adminHome"}>Dashboard</NavLink>
+        </li>
+      )}
+      {user && !isAdmin && (
+        <li>
+          <NavLink to={"/dashboard/userHome"}>Dashboard</NavLink>
+        </li>
+      )}
+      {/* <li>
         <Link to={"/dashboard/cart"}>
-          <button className="btn bg-gray-400">
-            <IoCartOutline size={30} />
-            <div className="badge badge-secondary">{cart.length}</div>
+          <button className="relative rounded-full p-3 bg-gray-400">
+            <IoCartOutline />
+            <div className="absolute top-0 badge badge-secondary">
+              {cart.length}
+            </div>
           </button>
         </Link>
       </li>
       {user ? (
         <li>
-          {/* <span>{user?.displayName}</span> */}
           <button
             className="btn btn-ghost"
             onClick={() => {
@@ -47,7 +57,7 @@ export default function Navbar() {
         <li>
           <NavLink to={"/login"}>Login</NavLink>
         </li>
-      )}
+      )} */}
     </>
   );
   return (
@@ -87,7 +97,28 @@ export default function Navbar() {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <Link to={"/dashboard/cart"}>
+            <button className="relative rounded-full p-3 bg-gray-400">
+              <IoCartOutline />
+              <div className="absolute top-0 badge badge-secondary">
+                {cart.length}
+              </div>
+            </button>
+          </Link>
+          {user ? (
+            <button
+              className="btn btn-ghost"
+              onClick={() => {
+                logOut().then().catch();
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link className="btn btn-ghost" to={"/login"}>
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

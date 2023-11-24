@@ -21,6 +21,7 @@ export default function Dashboard() {
       <div className="w-64 min-h-screen bg-orange-300">
         <ul>
           {isAdmin ? (
+            // admin dashboard
             <>
               <li>
                 <NavLink
@@ -76,7 +77,7 @@ export default function Dashboard() {
             </>
           ) : (
             <>
-              {" "}
+              {/* user dashboard */}{" "}
               <li>
                 <NavLink
                   className={
@@ -92,9 +93,9 @@ export default function Dashboard() {
                   className={
                     "flex items-center gap-3 p-3 m-2 text-xl font-medium"
                   }
-                  to={"/dashboard/reservation"}
+                  to={"/dashboard/paymentHistory"}
                 >
-                  <FaCalendar /> Reservation
+                  <FaCalendar /> PaymentHistory
                 </NavLink>
               </li>
               <li>
